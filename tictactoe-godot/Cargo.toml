@@ -1,0 +1,12 @@
+[package]
+edition = "2018"
+name = "tictactoe-godot"
+version = "0.1.0"
+
+[dependencies]
+gdnative = "0.9.3"
+tictactoe = {path = "../tictactoe"}
+
+[lib]
+crate-type = ["cdylib"]
+name = "tictactoe"

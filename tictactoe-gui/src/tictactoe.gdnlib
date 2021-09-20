@@ -1,0 +1,18 @@
+[general]
+
+singleton=false
+load_once=true
+symbol_prefix="godot_"
+reloadable=true
+
+[entry]
+
+OSX.64="res://../target/x86_64-apple-darwin/release/libtictactoe.dylib"
+Windows.64="res://../target/x86_64-pc-windows-msvc/release/tictactoe.dll"
+X11.64="res://../target/x86_64-unknown-linux-gnu/release/libtictactoe.so"
+
+[dependencies]
+
+OSX.64=[  ]
+Windows.64=[  ]
+X11.64=[  ]
