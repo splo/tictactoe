@@ -1,4 +1,5 @@
 mod tictactoe_godot;
+mod variant;
 
 use gdnative::prelude::{godot_init, InitHandle};
 use tictactoe_godot::TicTacToeGodot;

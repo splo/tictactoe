@@ -18,3 +18,21 @@ config/icon="res://assets/icon.png"
 [display]
 
 window/stretch/aspect="expand"
+
+[importer_defaults]
+
+ogg_vorbis={
+"loop": false,
+"loop_offset": 0
+}
+
+[input]
+
+place_mark={
+"deadzone": 0.5,
+"events": [  ]
+}
+reset={
+"deadzone": 0.5,
+"events": [  ]
+}

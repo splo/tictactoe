@@ -1,0 +1,5 @@
+{
+    "rust-analyzer.cargo.loadOutDirsFromCheck.": true,
+    "coverage-gutters.coverageBaseDir": "target/tarpaulin",
+    "coverage-gutters.showLineCoverage": true
+}
