@@ -1,0 +1,29 @@
+#!@duckscript
+godot_path = which godot
+
+if is_empty "${godot_path}"
+    temp_dir_path = temp_dir
+    download_dir = join_path "${temp_dir_path}" godot-install
+    mkdir "${download_dir}"
+
+    url = set "https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_win64.exe.zip"
+    zip_file = join_path "${download_dir}" "Godot_v${GODOT_VERSION}-stable_win64.exe.zip"
+
+    echo "Downloading Godot from ${url} ..."
+    wget -O "${zip_file}" "${url}"
+
+    install_dir = join_path "${USERPROFILE}" AppData Local Godot
+
+    mkdir "${install_dir}"
+    echo "Unziping Godot from ${zip_file} ..."
+    exec powershell -command "Expand-Archive -Force ${zip_file} ${install_dir}"
+
+    src_exe = join_path "${install_dir}" "Godot_v${GODOT_VERSION}-stable_win64.exe"
+    target_exe = join_path "${install_dir}" godot.exe
+
+    touch "${target_exe}"
+    mv "${src_exe}" "${target_exe}"
+
+    path = get_env PATH
+    set_env PATH "${install_dir};${path}"
+end

@@ -1,0 +1,27 @@
+#!@duckscript
+godot_path = which godot
+
+if is_empty "${godot_path}"
+    temp_dir_path = temp_dir
+    download_dir = join_path "${temp_dir_path}" godot-install
+    mkdir "${download_dir}"
+
+    url = set "https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_osx.universal.zip"
+    zip_file = join_path "${download_dir}" "Godot_v${GODOT_VERSION}-stable_osx.universal.zip"
+
+    echo "Downloading Godot from ${url} ..."
+    wget -O "${zip_file}" "${url}"
+
+    install_dir = set /Applications
+
+    echo "Unziping Godot from ${zip_file} ..."
+    exec unzip -d "${install_dir}" "${zip_file}"
+
+    src_exe = join_path "${install_dir}" Godop.app/Contents/MacOS/Godot
+    target_exe = join_path /usr/local/bin/godot
+
+    exec ln -sfn "${src_exe}" "${target_exe}"
+
+    path = get_env PATH
+    set_env PATH "/usr/local/bin:${path}"
+end

@@ -1,0 +1,37 @@
+[config]
+default_to_workspace = false
+
+[env]
+GODOT_VERSION = "3.3.3"
+
+[tasks.build-release.windows]
+env = {CARGO_MAKE_CARGO_BUILD_TEST_FLAGS = "--target=x86_64-pc-windows-msvc"}
+
+[tasks.build-release.mac]
+env = {CARGO_MAKE_CARGO_BUILD_TEST_FLAGS = "--target=x86_64-apple-darwin"}
+
+[tasks.build-release.linux]
+env = {CARGO_MAKE_CARGO_BUILD_TEST_FLAGS = "--target=x86_64-unknown-linux-gnu"}
+
+[tasks.install_godot.windows]
+script = {file = "bin/install-godot-windows.ds"}
+
+[tasks.install_godot.mac]
+script = {file = "bin/install-godot-mac.ds"}
+
+[tasks.install_godot.linux]
+script = {file = "bin/install-godot-linux.ds"}
+
+[tasks.install_templates]
+script = {file = "bin/install-godot-templates.ds"}
+
+[tasks.export]
+dependencies = ["ci-flow", "build-release", "install_godot", "install_templates"]
+script_runner = "@duckscript"
+script = '''
+os = os_family
+mkdir target/builds/${os}
+cd tictactoe-gui
+echo "Exporting Godot game ..."
+exec godot --no-window --export tictactoe-${os}
+'''

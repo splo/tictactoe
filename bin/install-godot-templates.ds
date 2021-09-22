@@ -1,0 +1,39 @@
+#!@duckscript
+os = os_family
+
+if eq "${os}" windows
+    install_dir = join_path "${USERPROFILE}" AppData Roaming Godot templates "${GODOT_VERSION}.stable"
+elseif eq "${os}" mac
+    install_dir = join_path "${HOME}" "Library/Application Support/Godot/templates/${GODOT_VERSION}.stable"
+else
+    install_dir = join_path "${HOME}" ".local/share/godot/templates/${GODOT_VERSION}.stable"
+end
+
+if not is_dir "${install_dir}"
+    temp_dir_path = temp_dir
+    download_dir = join_path "${temp_dir_path}" godot-install
+    mkdir "${download_dir}"
+
+    url = set "https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
+    zip_file = join_path "${download_dir}" "Godot_v${GODOT_VERSION}-stable_export_templates.zip"
+
+    echo "Downloading Godot templates from ${url} ..."
+    wget -O "${zip_file}" "${url}"
+
+    echo "Unziping Godot from ${zip_file} ..."
+    if eq "${os}" windows
+        exec powershell -command "Expand-Archive -Force ${zip_file} ${download_dir}"
+    else
+        exec unzip -d "${download_dir}" "${zip_file}"
+    end
+
+    parent_dir = dirname "${install_dir}"
+    dir_name = basename "${install_dir}"
+    # Duckscript's "mv" moves whole directory but doesn't allow to rename ...
+    mv "${download_dir}/templates" "${parent_dir}"
+    if eq "${os}" windows
+        exec powershell -command "Rename-Item -Path ${parent_dir}\\templates -NewName ${dir_name}"
+    else
+        exec mv "${download_dir}/templates" "${dir_name}"
+    end
+end
