@@ -17,7 +17,7 @@ if is_empty "${godot_path}"
     echo "Unziping Godot from ${zip_file} ..."
     exec unzip -d "${install_dir}" "${zip_file}"
 
-    src_exe = join_path "${install_dir}" Godop.app/Contents/MacOS/Godot
+    src_exe = join_path "${install_dir}" Godot.app/Contents/MacOS/Godot
     target_exe = join_path /usr/local/bin/godot
 
     exec ln -sfn "${src_exe}" "${target_exe}"

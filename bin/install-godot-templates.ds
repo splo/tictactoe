@@ -24,16 +24,15 @@ if not is_dir "${install_dir}"
     if eq "${os}" windows
         exec powershell -command "Expand-Archive -Force ${zip_file} ${download_dir}"
     else
-        exec unzip -d "${download_dir}" "${zip_file}"
+        exec unzip -u -d "${download_dir}" "${zip_file}"
     end
 
     parent_dir = dirname "${install_dir}"
-    dir_name = basename "${install_dir}"
     # Duckscript's "mv" moves whole directory but doesn't allow to rename ...
     mv "${download_dir}/templates" "${parent_dir}"
     if eq "${os}" windows
-        exec powershell -command "Rename-Item -Path ${parent_dir}\\templates -NewName ${dir_name}"
+        exec powershell -command "Rename-Item -Path ${parent_dir}\\templates -NewName ${install_dir}"
     else
-        exec mv "${download_dir}/templates" "${dir_name}"
+        exec mv -v "${parent_dir}/templates" "${install_dir}"
     end
 end
