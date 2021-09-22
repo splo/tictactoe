@@ -27,7 +27,9 @@ jobs:
             runner: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: egor-tensin/setup-clang@v1
+      - name: Install Clang
+        if: ${{ matrix.runner == 'windows-latest' }}
+        uses: egor-tensin/setup-clang@v1
         with:
           version: latest
           platform: x64
