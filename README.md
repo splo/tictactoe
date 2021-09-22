@@ -92,3 +92,7 @@ This will:
 - Install Godot if not installed.
 - Install Godot export templates if not installed.
 - Export the OS version of the game.
+
+## Credits
+
+Sound assets from [Kenney Game Assets 3](https://kenney.itch.io/kenney-game-assets-3).
