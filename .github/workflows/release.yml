@@ -75,5 +75,5 @@ jobs:
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\/v/}
       - uses: actions/upload-artifact@v2
         with:
-          name: tictactoe-${{ steps.get_version.outputs.VERSION }}-${{ os_dir }}.zip
-          path: target/builds/${{ os_dir }}
+          name: tictactoe-${{ steps.get_version.outputs.VERSION }}-${{ matrix.os_dir }}.zip
+          path: target/builds/${{ matrix.os_dir }}
