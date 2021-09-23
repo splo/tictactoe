@@ -65,6 +65,16 @@ jobs:
             /Applications/Godot.app
             ~/Library/Application Support/Godot
             ~/.local/share/godot
+      - name: Add Mesa OpenGL driver
+        if: runner.os == 'Windows'
+        continue-on-error: true
+        shell: cmd
+        run: |
+          mkdir %userprofile%\AppData\Local\Godot
+          cd %userprofile%\AppData\Local\Godot
+          aria2c https://downloads.fdossena.com/Projects/Mesa3D/Builds/MesaForWindows-x64-20.1.8.7z
+          7z e MesaForWindows-x64-20.1.8.7z
+          copy opengl32.dll C:\Windows\System32\opengl32.dll
       - name: Build game binaries
         uses: actions-rs/cargo@v1
         with:
