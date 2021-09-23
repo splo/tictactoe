@@ -54,7 +54,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: install
-          args: cargo-make
+          args: --force cargo-make
       - name: Cache Godot files
         uses: actions/cache@v2
         with:
