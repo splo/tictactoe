@@ -1,66 +1,18 @@
-name: CI
+name: Continuous Integration
 on: push
 jobs:
   test:
     name: Test Library
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain@v1
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Rust toolchain
+        uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-      - uses: actions-rs/cargo@v1
+      - name: Run unit tests
+        uses: actions-rs/cargo@v1
         with:
           command: test
           args: --package tictactoe
-  build:
-    name: Build Game
-    runs-on: ${{ matrix.runner }}
-    strategy:
-      matrix:
-        include:
-          - target: x86_64-pc-windows-msvc
-            runner: windows-latest
-          - target: x86_64-apple-darwin
-            runner: macos-latest
-          - target: x86_64-unknown-linux-gnu
-            runner: ubuntu-latest
-    steps:
-      - name: Install LLVM and Clang
-        if: matrix.runner == 'windows-latest'
-        uses: KyleMayes/install-llvm-action@v1
-        with:
-          version: "12"
-          directory: ${{ runner.temp }}/llvm
-      - name: Set LIBCLANG_PATH
-        if: matrix.runner == 'windows-latest'
-        run: echo "LIBCLANG_PATH=$((gcm clang).source -replace "clang.exe")" >> $env:GITHUB_ENV
-      - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          target: ${{ matrix.target }}
-          override: true
-      - uses: actions/cache@v2
-        with:
-          key: rt-${{ runner.os }}-godot-3.3.3-cargo-${{ hashFiles('**/Cargo.lock') }}
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            target/
-            ~/AppData/Local/Godot
-            ~/AppData/Roaming/Godot
-            /Applications/Godot.app
-            ~/Library/Application Support/Godot
-            ~/.local/share/godot
-      - name: Install cargo-make
-        uses: actions-rs/cargo@v1
-        with:
-          command: install
-          args: cargo-make
-      - uses: actions-rs/cargo@v1
-        with:
-          command: make
-          args: export
