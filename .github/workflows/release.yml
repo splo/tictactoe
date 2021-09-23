@@ -72,7 +72,7 @@ jobs:
           args: export
       - name: Get version
         id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/*\/?(v)}
       - uses: actions/upload-artifact@v2
         with:
           name: tictactoe-${{ steps.get_version.outputs.VERSION }}-${{ matrix.os_dir }}.zip
