@@ -30,8 +30,16 @@ dependencies = ["ci-flow", "build-release", "install_godot", "install_templates"
 script_runner = "@duckscript"
 script = '''
 os = os_family
-mkdir target/builds/${os}
+rm -r "target/builds/${os}"
+mkdir "target/builds/${os}"
 cd tictactoe-gui
 echo "Exporting Godot game ..."
-exec godot --no-window --export tictactoe-${os}
+exec godot --no-window --export "tictactoe-${os}"
+cd ..
+# Compress-Archive -Path C:\Stuff -DestinationPath archive.zip
+if eq "${os}" windows
+    exec powershell -command "Compress-Archive -Path target\\builds\\windows\\* target\\builds\\windows\\tictactoe.zip"
+elseif eq "${os}" linux
+    exec zip target/builds/linux/tictactoe.zip target/builds/linux/*
+end
 '''

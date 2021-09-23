@@ -76,4 +76,4 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: tictactoe-${{ steps.get_version.outputs.VERSION }}-${{ matrix.os_dir }}.zip
-          path: target/builds/${{ matrix.os_dir }}
+          path: target/builds/${{ matrix.os_dir }}/tictactoe.zip
