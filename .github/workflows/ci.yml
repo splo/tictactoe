@@ -38,6 +38,20 @@ jobs:
           toolchain: stable
           target: ${{ matrix.target }}
           override: true
+      - uses: actions/cache@v2
+        with:
+          key: rt-${{ runner.os }}-godot-3.3.3-cargo-${{ hashFiles('**/Cargo.lock') }}
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+            ~/AppData/Local/Godot
+            ~/AppData/Roaming/Godot
+            /Applications/Godot.app
+            ~/Library/Application Support/Godot
+            ~/.local/share/godot
       - name: Install cargo-make
         uses: actions-rs/cargo@v1
         with:
