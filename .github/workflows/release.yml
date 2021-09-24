@@ -108,6 +108,6 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            target/builds/artifacts/tictactoe-v${{ steps.get_version.outputs.VERSION }}-linux.zip
-            target/builds/artifacts/tictactoe-v${{ steps.get_version.outputs.VERSION }}-mac.zip
-            target/builds/artifacts/tictactoe-v${{ steps.get_version.outputs.VERSION }}-windows.zip
+            target/builds/artifacts/tictactoe-v${{ steps.get_version.outputs.VERSION }}-linux
+            target/builds/artifacts/tictactoe-v${{ steps.get_version.outputs.VERSION }}-mac
+            target/builds/artifacts/tictactoe-v${{ steps.get_version.outputs.VERSION }}-windows
