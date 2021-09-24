@@ -9,12 +9,12 @@ if is_empty "${godot_path}"
     url = set "https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_linux_headless.64.zip"
     zip_file = join_path "${download_dir}" "Godot_v${GODOT_VERSION}-stable_linux_headless.64.zip"
 
-    echo "Downloading Godot from ${url} ..."
+    echo "Downloading Godot from \"${url}\" to \"${zip_file}\" ..."
     wget -O "${zip_file}" "${url}"
 
     install_dir = set /usr/local/bin
 
-    echo "Unziping Godot from ${zip_file} ..."
+    echo "Unziping Godot from \"${zip_file}\" to \"${install_dir}\" ..."
     exec unzip -d "${install_dir}" "${zip_file}"
 
     src_exe = join_path "${install_dir}" "Godot_v${GODOT_VERSION}-stable_linux_headless.64"

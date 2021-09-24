@@ -17,10 +17,10 @@ if not is_dir "${install_dir}"
     url = set "https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
     zip_file = join_path "${download_dir}" "Godot_v${GODOT_VERSION}-stable_export_templates.zip"
 
-    echo "Downloading Godot templates from ${url} ..."
+    echo "Downloading Godot templates from \"${url}\" to \"${zip_file}\" ..."
     wget -O "${zip_file}" "${url}"
 
-    echo "Unziping Godot from ${zip_file} ..."
+    echo "Unziping Godot templates from \"${zip_file}\" to \"${download_dir}\" ..."
     if eq "${os}" windows
         exec powershell -command "Expand-Archive -Force ${zip_file} ${download_dir}"
     else
