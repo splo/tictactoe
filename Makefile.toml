@@ -33,13 +33,11 @@ os = os_family
 rm -r "target/builds/${os}"
 mkdir "target/builds/${os}"
 cd tictactoe-gui
-echo "Exporting Godot game ..."
+echo "Exporting ${os} version of Godot game ..."
 exec godot --no-window --export "tictactoe-${os}"
 cd ..
-# Compress-Archive -Path C:\Stuff -DestinationPath archive.zip
-if eq "${os}" windows
-    exec powershell -command "Compress-Archive -Path target\\builds\\windows\\* target\\builds\\windows\\tictactoe.zip"
-elseif eq "${os}" linux
-    exec zip target/builds/linux/tictactoe.zip target/builds/linux/*
+if eq "${os}" mac
+    exec unzip -d target/builds/mac/ target/builds/mac/tictactoe.zip
+    rm target/builds/mac/tictactoe.zip
 end
 '''

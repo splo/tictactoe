@@ -70,12 +70,12 @@ jobs:
         continue-on-error: true
         shell: cmd
         run: |
-          mkdir %userprofile%\AppData\Local\Godot\godot.exe.local
-          cd %userprofile%\AppData\Local\Godot\godot.exe.local\
           aria2c https://downloads.fdossena.com/Projects/Mesa3D/Builds/MesaForWindows-x64-20.1.8.7z
           7z e MesaForWindows-x64-20.1.8.7z
-          dir ..
-          dir
+          mkdir %userprofile%\AppData\Local\Godot\godot.exe.local
+          copy opengl32.dll %userprofile%\AppData\Local\Godot\godot.exe.local\
+          dir %userprofile%\AppData\Local\Godot
+          dir %userprofile%\AppData\Local\Godot\godot.exe.local
       - name: Build game binaries
         uses: actions-rs/cargo@v1
         with:
@@ -88,4 +88,4 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: tictactoe-${{ steps.get_version.outputs.VERSION }}-${{ matrix.os_dir }}.zip
-          path: target/builds/${{ matrix.os_dir }}/tictactoe.zip
+          path: target/builds/${{ matrix.os_dir }}
