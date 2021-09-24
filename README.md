@@ -10,7 +10,7 @@ A simple [tic-tac-toe](https://en.wikipedia.org/wiki/Tic-tac-toe) two player gam
 - Strict seperaration between game logic written in Rust and user interface in Godot, as explained in the [game architecture page](https://godot-rust.github.io/book/gdnative-overview/architecture.html#3-rust-game--godot-io-layer) of the [godot-rust book](https://godot-rust.github.io/book/).
 - Deterministic game logic.
 - Unit tests for the core gameplay part.
-- CI that builds to Linux, macOS and Windows (MSVC) on every push to the main branch.
+- CI that builds to Linux, macOS and Windows (MSVC) and release as zip files on every push with tag named starting with `v`.
 - Scripts that allow to install Godot and its export templates on Linux, macOS and Windows.
 - Designed to be easily copy-pasted to bootstrap new projects.
 
