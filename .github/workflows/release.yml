@@ -103,11 +103,16 @@ jobs:
           path: target/builds/artifacts
       - name: Zip artifacts
         run: |
-          export ARTIFACT_DIR=target/builds/artifacts
-          export ARTIFACT_BASENAME=tictactoe-v${{ steps.get_version.outputs.VERSION }}
-          zip -j ${ARTIFACT_DIR}/${ARTIFACT_BASENAME}-linux.zip   ${ARTIFACT_DIR}/${ARTIFACT_BASENAME}-linux/*
-          zip -j ${ARTIFACT_DIR}/${ARTIFACT_BASENAME}-mac.zip     ${ARTIFACT_DIR}/${ARTIFACT_BASENAME}-mac/*
-          zip -j ${ARTIFACT_DIR}/${ARTIFACT_BASENAME}-windows.zip ${ARTIFACT_DIR}/${ARTIFACT_BASENAME}-windows/*
+          base_dir=target/builds/artifacts
+          base_name=tictactoe-v${{ steps.get_version.outputs.VERSION }}
+          cd "${base_dir}"
+          find . -type f
+          for os in linux mac windows; do
+            echo "Building \"${base_name}-${os}.zip\" ..."
+            cd "${base_name}-${os}"
+            zip -r "../${base_name}-${os}.zip" *
+            cd ..
+          done
       - name: Create release
         uses: softprops/action-gh-release@v1
         with:
