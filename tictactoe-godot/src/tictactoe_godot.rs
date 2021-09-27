@@ -16,6 +16,8 @@ use crate::variant::{
 #[register_with(Self::register)]
 pub struct TicTacToeGodot {
     state: TicTacToe,
+    #[property]
+    last_clicked_coordinates: Vector2,
 }
 
 #[methods]
@@ -23,6 +25,7 @@ impl TicTacToeGodot {
     fn new(_owner: &Node) -> Self {
         TicTacToeGodot {
             state: TicTacToe::new(),
+            last_clicked_coordinates: Vector2::default(),
         }
     }
 
@@ -69,24 +72,22 @@ impl TicTacToeGodot {
 
     #[export]
     fn _physics_process(&mut self, owner: &Node, delta: f64) {
-        let actions = process_input(owner);
+        let actions = process_input(&self.last_clicked_coordinates);
         let events = self.state.update(delta, &actions);
         process_events(&events, owner);
     }
 }
 
-fn process_input(owner: &Node) -> Vec<Action> {
+fn process_input(last_clicked_coordinates: &Vector2) -> Vec<Action> {
     let mut actions = Vec::<Action>::new();
     let input = Input::godot_singleton();
     if input.is_action_just_released("reset") {
         actions.push(Action::Reset);
     }
     if input.is_action_just_pressed("place_mark") {
-        if let Some(ui_node) = owner.get_child(0) {
-            let result = unsafe { ui_node.assume_safe() }.get("last_clicked_coordinates");
-            if let Some(coordinates) = result.try_to_vector2().map(|v| vector_to_coordinates(&v)) {
-                actions.push(Action::PlaceMark { coordinates })
-            }
+        let coordinates = vector_to_coordinates(last_clicked_coordinates);
+        if (0..3).contains(&coordinates.column) && (0..3).contains(&coordinates.row) {
+            actions.push(Action::PlaceMark { coordinates })
         }
     }
     actions

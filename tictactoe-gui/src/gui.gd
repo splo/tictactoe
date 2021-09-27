@@ -7,9 +7,7 @@ onready var x_turn_node = $MainMarginContainer/MainVBoxContainer/ScoreContainer/
 onready var x_score_node = $MainMarginContainer/MainVBoxContainer/ScoreContainer/ScoreMarginContainer/ScoreCenterContainer/ScoreHBoxContainer/XPanelContainer/XHBoxContainer/XScoreLabel
 onready var o_turn_node = $MainMarginContainer/MainVBoxContainer/ScoreContainer/ScoreMarginContainer/ScoreCenterContainer/ScoreHBoxContainer/OPanelContainer
 onready var o_score_node = $MainMarginContainer/MainVBoxContainer/ScoreContainer/ScoreMarginContainer/ScoreCenterContainer/ScoreHBoxContainer/OPanelContainer/OHBoxContainer/OScoreLabel
-
-# Called by tictactoe_godot to find where to place mark.
-var last_clicked_coordinates = null
+onready var game_logic_node = get_parent()
 
 var current_turn = Mark.NONE setget set_current_turn
 var game_over: bool = false
@@ -26,7 +24,7 @@ func _input(event: InputEvent):
 			if event.pressed:
 				var clicked_coordinates = global_position_to_mark_coordinates(event.position)
 				if clicked_coordinates != null:
-					last_clicked_coordinates = clicked_coordinates
+					game_logic_node.last_clicked_coordinates = clicked_coordinates
 					Input.action_press("place_mark")
 			elif Input.is_action_pressed("place_mark"):
 				Input.action_release("place_mark")
